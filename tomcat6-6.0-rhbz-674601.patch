@@ -1,0 +1,16 @@
+--- java/org/apache/catalina/connector/Request.java.orig	2011-02-02 12:55:24.935848000 -0500
++++ java/org/apache/catalina/connector/Request.java	2011-02-02 12:59:57.575096000 -0500
+@@ -2701,7 +2701,12 @@
+             int semi = entry.indexOf(";q=");
+             if (semi >= 0) {
+                 try {
+-                    quality = Double.parseDouble(entry.substring(semi + 3));
++                   String strQuality = entry.substring(semi + 3);
++                   if(strQuality.length() <= 5) {
++                     quality = Double.parseDouble(strQuality);
++                   } else {
++                     quality = 0.0;
++                   } 
+                 } catch (NumberFormatException e) {
+                     quality = 0.0;
+                 }
